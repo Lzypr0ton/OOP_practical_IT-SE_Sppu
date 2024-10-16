@@ -1,0 +1,46 @@
+public class Employee {
+    String name;
+    String add;
+    int id;
+    int mobile;
+    int  basic_salary;
+
+    public Employee(String name, String add, int id, int mobile, int basic_salary) {
+        this.name = name;
+        this.add = add;
+        this.id = id;
+        this.mobile = mobile;
+        this.basic_salary = basic_salary;
+    }
+
+    public void salary() {
+        float basic_salary = 1000000;
+        float da = (float) (this.basic_salary * 97) / 100;
+        float hra = (float) (this.basic_salary * 10) / 100;
+        float pf = (float) (this.basic_salary * 12) / 100;
+        float cf = (float) this.basic_salary * 0.1F/ 100;
+        float gross = (float) this.basic_salary + da + hra;
+        System.out.println("DA: " + da);
+        System.out.println("HRA " + hra);
+        System.out.println("PF: " + pf);
+        System.out.println("CF " + cf);
+        System.out.println("Gross " + gross);
+    }
+
+    public void display() {
+        System.out.println("Name: " + this.name);
+        System.out.println("Address:" + this.add);
+        System.out.println("ID:" + this.id);
+        System.out.println("Mobile: " + this.mobile);
+    }
+
+    public static void main(String args[]) {
+        Employee emp = new Employee("Amol", "Pune", 101, 774488541, 5000000);
+        emp.display();
+        emp.salary();
+
+
+    }
+}
+
+
