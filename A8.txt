@@ -1,0 +1,197 @@
+package assignment;
+
+import java.io.*;
+import java.util.*;
+
+// ========================= DATABASE CLASS =========================//
+class Database {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    // Method to add student records
+    public void addRecords() throws IOException {
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("sample.txt", true)))) {
+            String studentName, address;
+            int studentId, rollNo, classNumber;
+            float marks;
+            boolean addMore;
+
+            do {
+                System.out.print("\nEnter Student Name: ");
+                studentName = br.readLine();
+                System.out.print("Student Id: ");
+                studentId = Integer.parseInt(br.readLine());
+                System.out.print("Roll No: ");
+                rollNo = Integer.parseInt(br.readLine());
+                System.out.print("Address: ");
+                address = br.readLine();
+                System.out.print("Class: ");
+                classNumber = Integer.parseInt(br.readLine());
+                System.out.print("Marks: ");
+                marks = Float.parseFloat(br.readLine());
+
+                pw.println(studentName + " " + studentId + " " + rollNo + " " + address + " " + classNumber + " " + marks);
+                System.out.print("\nRecords added successfully! Do you want to add more records? (y/n): ");
+                addMore = br.readLine().equalsIgnoreCase("y");
+            } while (addMore);
+        }
+    }
+
+    // Method to read student records
+    public void readRecords() throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader("sample.txt"))) {
+            String record;
+            System.out.println("\nStudent Records:");
+            while ((record = file.readLine()) != null) {
+                System.out.println(record);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("\nERROR: File not found!");
+        }
+    }
+
+    // Method to search for a student record
+    public void searchRecords() throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader("sample.txt"))) {
+            System.out.print("Enter the ID of the student you want to search: ");
+            String searchId = br.readLine();
+            String record;
+            boolean found = false;
+
+            while ((record = file.readLine()) != null) {
+                String[] line = record.split(" ");
+                if (searchId.equalsIgnoreCase(line[1])) {
+                    System.out.println("Record found: " + record);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                System.out.println("Record not found.");
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("\nERROR: File not found!");
+        }
+    }
+
+    // Method to delete a student record
+    public void deleteRecords() throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader("sample.txt"));
+             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("temp.txt")))) {
+
+            System.out.print("Enter the name of the student you want to delete: ");
+            String searchName = br.readLine();
+            String record;
+            boolean found = false;
+
+            while ((record = file.readLine()) != null) {
+                String[] line = record.split(" ");
+                if (!searchName.equalsIgnoreCase(line[0])) {
+                    pw.println(record);
+                } else {
+                    System.out.println("Record deleted: " + record);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("Record not found.");
+            }
+        }
+
+        // Rename files to delete the old one
+        File oldFile = new File("sample.txt");
+        File newFile = new File("temp.txt");
+        if (oldFile.delete() && newFile.renameTo(oldFile)) {
+            System.out.println("Records updated successfully.");
+        } else {
+            System.out.println("Error during update.");
+        }
+    }
+
+    // Method to update a student record
+    public void updateRecords() throws IOException {
+        try (BufferedReader file = new BufferedReader(new FileReader("sample.txt"));
+             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter("temp.txt")))) {
+
+            System.out.print("Enter the name of the student you want to update: ");
+            String searchName = br.readLine();
+            String record;
+            boolean found = false;
+
+            while ((record = file.readLine()) != null) {
+                String[] line = record.split(" ");
+                if (!searchName.equalsIgnoreCase(line[0])) {
+                    pw.println(record);
+                } else {
+                    System.out.println("Record found: " + record);
+                    System.out.print("Enter updated marks: ");
+                    float updatedMarks = Float.parseFloat(br.readLine());
+                    pw.println(line[0] + " " + line[1] + " " + line[2] + " " + line[3] + " " + line[4] + " " + updatedMarks);
+                    found = true;
+                }
+            }
+
+            if (!found) {
+                System.out.println("Record not found.");
+            }
+        }
+
+        // Rename files to delete the old one
+        File oldFile = new File("sample.txt");
+        File newFile = new File("temp.txt");
+        if (oldFile.delete() && newFile.renameTo(oldFile)) {
+            System.out.println("Record updated successfully.");
+        } else {
+            System.out.println("Error during update.");
+        }
+    }
+
+    // Method to clear all records
+    public void clear(String filename) throws IOException {
+        try (PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(filename)))) {
+            System.out.println("All records cleared successfully!");
+        }
+    }
+}
+
+// ========================= MAIN CLASS =========================//
+public class Main {
+    public static void main(String[] args) throws IOException {
+        Database db = new Database();
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("1. Add Records\n2. Display Records\n3. Clear All Records\n4. Search Records\n5. Delete Records\n6. Update Records\n7. Exit\n\nEnter your choice: ");
+            int choice = sc.nextInt();
+            sc.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    db.addRecords();
+                    break;
+                case 2:
+                    db.readRecords();
+                    break;
+                case 3:
+                    db.clear("sample.txt");
+                    break;
+                case 4:
+                    db.searchRecords();
+                    break;
+                case 5:
+                    db.deleteRecords();
+                    break;
+                case 6:
+                    db.updateRecords();
+                    break;
+                case 7:
+                    System.out.println("Exiting program.");
+                    return;
+                default:
+                    System.out.println("Invalid choice! Please try again.");
+                    break;
+            }
+            System.out.println("====================================================");
+        }
+    }
+}

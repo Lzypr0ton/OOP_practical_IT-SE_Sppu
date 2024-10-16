@@ -1,0 +1,132 @@
+package assignment;
+
+import java.util.Scanner;
+
+// ======================== INTERFACE PaymentProcessor ======================= //
+interface PaymentProcessor {
+    void pay(int amount); // Interface method for payment
+}
+
+// ======================== CLASS CreditCard ======================= //
+class CreditCard implements PaymentProcessor {
+    private final String cardHolderName;
+    private final double cardNumber;
+    private final String expirationDate;
+
+    // Constructor of CreditCard class
+    public CreditCard() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("----------------------------------------------------------");
+        System.out.print("Card Holder Name: ");
+        this.cardHolderName = sc.next();
+        System.out.print("Card Number: ");
+        this.cardNumber = sc.nextDouble();
+        System.out.print("Card Expiration Date (MM/YY): ");
+        this.expirationDate = sc.next();
+        System.out.println("----------------------------------------------------------");
+    }
+
+    @Override
+    public void pay(int amount) {
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Paying through Credit Card: Charging $" + amount);
+        System.out.println("----------------------------------------------------------");
+    }
+}
+
+// ======================== CLASS PayPal ======================= //
+class PayPal implements PaymentProcessor {
+    // Constructor of PayPal class
+    public PayPal() {
+        System.out.println("\nChecking Internet Connection...");
+    }
+
+    @Override
+    public void pay(int amount) {
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Paying through PayPal: Charging $" + amount);
+        System.out.println("----------------------------------------------------------");
+    }
+}
+
+// ======================== CLASS BitCoin ======================= //
+class BitCoin implements PaymentProcessor {
+    private final String transactionAddress;
+
+    // Constructor of BitCoin class
+    public BitCoin() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter Transaction Input Address: ");
+        this.transactionAddress = sc.next();
+    }
+
+    @Override
+    public void pay(int amount) {
+        System.out.println("----------------------------------------------------------");
+        System.out.println("Paying through BitCoin: Charging $" + amount);
+        System.out.println("----------------------------------------------------------");
+    }
+}
+
+// ======================== CLASS Order ======================= //
+class Order {
+    private final PaymentProcessor paymentProcessor; // Payment processor object
+    private final int amount; // Amount for the order
+
+    // Order constructor
+    public Order(int amount, PaymentProcessor paymentProcessor) {
+        this.amount = amount;
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    // Process the payment
+    public void process() {
+        paymentProcessor.pay(amount); // Call pay method
+    }
+}
+
+// ======================== CLASS Main ======================= //
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice; // User choice for payment method
+        Order order; // Order reference
+
+        while (true) {
+            // Menu display
+            System.out.println("\n**** SHOPPING CART ****");
+            System.out.println("1. Credit Card");
+            System.out.println("2. PayPal");
+            System.out.println("3. BitCoin");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            if (choice >= 1 && choice <= 3) {
+                System.out.print("Enter amount to transfer: ");
+                int amount = sc.nextInt();
+
+                // Switch case to handle payment methods
+                switch (choice) {
+                    case 1:
+                        order = new Order(amount, new CreditCard()); // CreditCard payment
+                        order.process(); // Process the payment
+                        break;
+                    case 2:
+                        order = new Order(amount, new PayPal()); // PayPal payment
+                        order.process(); // Process the payment
+                        break;
+                    case 3:
+                        order = new Order(amount, new BitCoin()); // BitCoin payment
+                        order.process(); // Process the payment
+                        break;
+                }
+            } else if (choice == 4) {
+                System.out.println("\nThank you for shopping!");
+                return; // Exit the program
+            } else {
+                System.out.println("Invalid payment mode! Please try again.");
+            }
+        }
+    }
+}

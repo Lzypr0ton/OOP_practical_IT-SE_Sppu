@@ -1,0 +1,107 @@
+package assignment;
+
+import java.util.Scanner;
+
+// Exception handling class
+class ExceptionHandler {
+    void arithmeticException() {
+        Scanner sc = new Scanner(System.in);
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                System.out.println("Enter Two Numbers:");
+                int num1 = sc.nextInt(); // Taking first number as input from user
+                int num2 = sc.nextInt(); // Taking second number as input from user
+                double result = (double) num1 / num2; // Dividing num1 by num2
+                System.out.println("Division is " + result); // Printing result
+                valid = true; // Changing value of valid
+            } catch (ArithmeticException e) {
+                System.out.println("\t\tCannot divide by zero. Please enter a valid denominator.\n");
+            } catch (Exception e) {
+                System.out.println("\t\tInvalid input. Please enter integers only.\n");
+                sc.next(); // Clear the invalid input
+            }
+        }
+    }
+
+    void arrayOutOfBound(int[] arr) {
+        Scanner sc = new Scanner(System.in);
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                System.out.print("\nEnter the Index No. of the Element you want to print: ");
+                int index = sc.nextInt(); // Taking array index from user
+                System.out.println(arr[index] + " is present at the given index"); // Printing value at that index
+                valid = true; // Changing value of valid
+            } catch (ArrayIndexOutOfBoundsException e) {
+                System.out.println("\t\tInvalid Index. Try again...\n");
+            } catch (Exception e) {
+                System.out.println("\t\tInvalid input. Please enter an integer.\n");
+                sc.next(); // Clear the invalid input
+            }
+        }
+    }
+
+    void numberFormat() {
+        Scanner sc = new Scanner(System.in);
+        boolean valid = false;
+
+        while (!valid) {
+            try {
+                System.out.print("Enter first number: ");
+                String num1 = sc.next(); // Taking first string as input from user
+                System.out.print("Enter second number: ");
+                String num2 = sc.next(); // Taking second string as input from user
+                int a = Integer.parseInt(num1); // Converting string to integer
+                int b = Integer.parseInt(num2); // Converting string to integer
+                System.out.println("\nEntered Numbers are integers: " + a + " , " + b); // Printing both integers
+                valid = true; // Changing value of valid
+            } catch (NumberFormatException e) {
+                System.out.println("\t\tNumbers you have entered are not integers. Please try again...\n");
+            } catch (Exception e) {
+                System.out.println("\t\tInvalid input. Please enter valid numbers.\n");
+                sc.next(); // Clear the invalid input
+            }
+        }
+    }
+}
+
+// Main class
+public class A6 {
+    public static void main(String[] args) {
+        ExceptionHandler exceptionHandler = new ExceptionHandler(); // Creating object of ExceptionHandler class
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            // Menu driven
+            System.out.println("\nEnter the choice you want to check the type of error:"
+                    + "\n\t\t1] Arithmetic Exception"
+                    + "\n\t\t2] Array Out Of Bound"
+                    + "\n\t\t3] Number Format"
+                    + "\n\t\t4] Exit");
+            choice = sc.nextInt(); // Taking input from user
+
+            // Switch case
+            switch (choice) {
+                case 1:
+                    exceptionHandler.arithmeticException(); // Calling arithmeticException method
+                    break;
+                case 2:
+                    int[] arr = {1, 4, 5, 2, 3, 8};
+                    exceptionHandler.arrayOutOfBound(arr); // Calling arrayOutOfBound method
+                    break;
+                case 3:
+                    exceptionHandler.numberFormat(); // Calling numberFormat method
+                    break;
+                case 4:
+                    System.out.println("Exiting the program.");
+                    break;
+                default:
+                    System.out.println("INVALID INPUT !!!"); // Printing when input is invalid
+            }
+        } while (choice != 4); // Loop until user chooses to exit
+    }
+}

@@ -1,0 +1,134 @@
+package assignment;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
+
+class Number {
+
+    // Method to create an array and store elements
+    public static <E> void arr() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter size of array: ");
+        int n = sc.nextInt(); // Taking size of array from user
+        List<Object> arr = new ArrayList<>(n); // Creating an ArrayList
+
+        System.out.print("Enter Array Elements: ");
+        for (int i = 0; i < n; i++) {
+            arr.add(sc.next()); // Taking array element from user
+        }
+
+        System.out.print("Entered Array is: ");
+        for (Object element : arr) {
+            System.out.printf("'%s' ", element); // Printing array elements
+        }
+        System.out.println(); // Print blank line
+    }
+
+    // Method to check for palindrome
+    public static <T> void palindrome(T s) {
+        String s1 = s.toString().toLowerCase(); // Converting to lowercase
+        String reversed = new StringBuilder(s1).reverse().toString(); // Reversing the string
+
+        if (Objects.equals(s1, reversed)) {
+            System.out.println(s + " is a palindrome.");
+        } else {
+            System.out.println(s + " is not a palindrome.");
+        }
+    }
+
+    // Method to check if a number is even or odd
+    public static <T> void evenOdd(T a) {
+        if ((int) a % 2 == 0) {
+            System.out.println(a + " is an even number.");
+        } else {
+            System.out.println(a + " is an odd number.");
+        }
+    }
+
+    // Method to check if a number is prime
+    public static <T> void prime(T a) {
+        int num = (int) a;
+        if (num <= 1) {
+            System.out.println(a + " is not a prime number.");
+        } else if (num == 2) {
+            System.out.println(a + " is a prime number.");
+        } else if (num % 2 == 0) {
+            System.out.println(a + " is not a prime number.");
+        } else {
+            boolean isPrime = true;
+            for (int i = 3; i <= Math.sqrt(num); i += 2) {
+                if (num % i == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            System.out.println(a + (isPrime ? " is a prime number." : " is not a prime number."));
+        }
+    }
+
+    // Method to check the type of input
+    public static <T> void checkFunction(T s) {
+        try {
+            Integer.parseInt(s.toString());
+            System.out.println("We can perform palindrome, integer array, check prime, even/odd functions.");
+        } catch (NumberFormatException e) {
+            System.out.println("We can perform palindrome and string array functions.");
+        }
+    }
+}
+
+// Main class
+public class A7{
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s;
+
+        while (true) {
+            System.out.println("\n\t==== MENU BAR ====\n");
+            System.out.println("\t1. String");
+            System.out.println("\t2. Integer");
+            System.out.println("\t3. Integer Array");
+            System.out.println("\t4. String Array");
+            System.out.println("\t5. Check Function");
+            System.out.println("\t6. Exit");
+
+            int choice = sc.nextInt(); // Taking input from user
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the String: ");
+                    s = sc.next();
+                    Number.palindrome(s); // Calling palindrome method
+                    break;
+
+                case 2:
+                    System.out.print("Enter the Integer: ");
+                    s = sc.next();
+                    Number.palindrome(s); // Calling palindrome method
+                    Number.evenOdd(Integer.parseInt(s)); // Calling evenOdd method
+                    Number.prime(Integer.parseInt(s)); // Calling prime method
+                    break;
+
+                case 3:
+                case 4:
+                    Number.arr(); // Calling array method
+                    break;
+
+                case 5:
+                    System.out.print("Enter the String: ");
+                    String ss = sc.next();
+                    Number.checkFunction(ss); // Calling check function method
+                    break;
+
+                case 6:
+                    System.out.println("Exiting the program.");
+                    return; // Exit the program
+
+                default:
+                    System.out.println("Invalid Input !!!"); // Print invalid input
+            }
+        }
+    }
+}

@@ -1,0 +1,164 @@
+package assignment;
+
+import java.util.Scanner;
+
+// ============================= ABSTRACT CLASS CarFactory ============================= //
+abstract class CarFactory {
+    protected String companyName, carName;
+    protected double budget;
+
+    // Abstract methods
+    abstract void getPrice(double price);
+    abstract void detail(String companyName, String carName);
+    abstract void accessories();
+
+    // Input method to gather car information
+    void input() {
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Company: ");
+        companyName = scan.next();
+        System.out.print("Car Name: ");
+        carName = scan.next();
+        System.out.print("Rough Budget (in Lakhs): ");
+        budget = scan.nextDouble();
+    }
+
+    // Display car information
+    void display() {
+        getPrice(budget);
+        System.out.println("\n-----------------------------------");
+        detail(companyName, carName);
+        System.out.println("\n-----------------------------------");
+        accessories();
+        System.out.println("\n-----------------------------------");
+    }
+}
+
+// ============================= CLASS SmallCar ============================= //
+class SmallCar extends CarFactory {
+    private String airbagsAvailability;
+
+    @Override
+    public void getPrice(double price) {
+        airbagsAvailability = (price > 2 && price < 5) ? "No" : "Yes";
+    }
+
+    @Override
+    public void detail(String companyName, String carName) {
+        System.out.println("Company: " + companyName);
+        System.out.println("Car Name: " + carName);
+        System.out.println("Color: Black/White/Orange/Red");
+        System.out.println("Fuel: Petrol");
+        System.out.println("Gears: Manual");
+    }
+
+    @Override
+    public void accessories() {
+        System.out.println("Types of Tyres: Alloy Wheels");
+        System.out.println("Airbags: " + airbagsAvailability);
+        System.out.println("Back Wiper: " + airbagsAvailability);
+        System.out.println("Side Mirrors: Two");
+        System.out.println("Touch Screen Music Player: " + airbagsAvailability);
+    }
+}
+
+// ============================= CLASS Sedan ============================= //
+class Sedan extends CarFactory {
+    private String roofWindowAvailability;
+
+    @Override
+    public void getPrice(double price) {
+        roofWindowAvailability = (price > 6 && price < 10) ? "No" : "Yes";
+    }
+
+    @Override
+    public void detail(String companyName, String carName) {
+        System.out.println("Company: " + companyName);
+        System.out.println("Car Name: " + carName);
+        System.out.println("Color: Black/White/Orange/Red");
+        System.out.println("Fuel: Petrol/Diesel");
+        System.out.println("Gears: Auto/Manual");
+    }
+
+    @Override
+    public void accessories() {
+        System.out.println("Types of Tyres: Alloy Wheels");
+        System.out.println("Airbags: YES");
+        System.out.println("Back Wiper: YES");
+        System.out.println("Side Mirrors: Two");
+        System.out.println("Touch Screen Music Player: YES");
+        System.out.println("Roof Window: " + roofWindowAvailability);
+    }
+}
+
+// ============================= CLASS LuxuryCar ============================= //
+class LuxuryCar extends CarFactory {
+    private String additionalFeatures;
+
+    @Override
+    public void getPrice(double price) {
+        additionalFeatures = (price > 10 && price < 14) ? "No" : "Yes";
+    }
+
+    @Override
+    public void detail(String companyName, String carName) {
+        System.out.println("Company: " + companyName);
+        System.out.println("Car Name: " + carName);
+        System.out.println("Color: Black/White/Orange/Red");
+        System.out.println("Fuel: Diesel");
+        System.out.println("Gears: Auto");
+    }
+
+    @Override
+    public void accessories() {
+        System.out.println("Types of Tyres: Alloy Wheels");
+        System.out.println("Airbags: YES");
+        System.out.println("Back Wiper: YES");
+        System.out.println("Side Mirrors: Two");
+        System.out.println("Touch Screen Music Player: YES");
+        System.out.println("Roof Window: YES");
+        System.out.println("Automotive Garbage Cans: " + additionalFeatures);
+        System.out.println("Automotive Air Freshener: " + additionalFeatures);
+        System.out.println("Button Start: " + additionalFeatures);
+    }
+}
+
+// ============================= MAIN CLASS ============================= //
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        CarFactory car; // Reference for CarFactory
+
+        while (true) {
+            System.out.println("Which Car do you want to see?");
+            System.out.println("\n\t1. Small Car\n\t2. Sedan Car\n\t3. Luxury Car\n\t4. Exit");
+            int choice = scan.nextInt();
+            System.out.println();
+
+            switch (choice) {
+                case 1:
+                    car = new SmallCar(); // Create SmallCar object
+                    car.input(); // Gather input
+                    car.display(); // Display car information
+                    break;
+                case 2:
+                    car = new Sedan(); // Create Sedan object
+                    car.input(); // Gather input
+                    car.display(); // Display car information
+                    break;
+                case 3:
+                    car = new LuxuryCar(); // Create LuxuryCar object
+                    car.input(); // Gather input
+                    car.display(); // Display car information
+                    break;
+                case 4:
+                    System.out.println("Exiting the program.");
+                    return; // Stop execution
+                default:
+                    System.out.println("INVALID CHOICE !!");
+                    System.out.println("\n-----------------------------------");
+                    break;
+            }
+        }
+    }
+}

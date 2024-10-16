@@ -1,0 +1,117 @@
+
+import java.util.Scanner;
+
+// Abstract base class Shape
+abstract class Shape {
+    private double dimen1, dimen2; // private data members
+
+    // Default constructor
+    Shape() {}
+
+    // Parameterized constructor
+    Shape(double a, double b) {
+        this.dimen1 = a;
+        this.dimen2 = b;
+    }
+
+    // Method to return dimension 1
+    double getDimen1() {
+        return dimen1;
+    }
+
+    // Method to return dimension 2
+    double getDimen2() {
+        return dimen2;
+    }
+
+    // Abstract method to calculate area
+    abstract double computeArea();
+
+    // Method to take dimensions as input from user
+    void read() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("ENTER FIRST DIMENSION: ");
+        dimen1 = sc.nextDouble(); // read dimension 1 from user
+        System.out.print("ENTER SECOND DIMENSION: ");
+        dimen2 = sc.nextDouble(); // read dimension 2 from user
+    }
+}
+
+// Class Triangle that extends Shape
+class Triangle extends Shape {
+    // Default constructor
+    Triangle() {}
+
+    // Parameterized constructor
+    Triangle(double base, double height) {
+        super(base, height); // call to parameterized constructor of Shape class
+    }
+
+    // Method to calculate and return area of Triangle
+    @Override
+    double computeArea() {
+        return (getDimen1() * getDimen2()) / 2;
+    }
+}
+
+// Class Rectangle that extends Shape
+class Rectangle extends Shape {
+    // Default constructor
+    Rectangle() {}
+
+    // Parameterized constructor
+    Rectangle(double length, double breadth) {
+        super(length, breadth); // call to parameterized constructor of Shape class
+    }
+
+    // Method to calculate and return area of Rectangle
+    @Override
+    double computeArea() {
+        return getDimen1() * getDimen2();
+    }
+}
+
+// Main class to run the program
+public class A1 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice; // variable for user choice
+        Shape shapeRef; // reference variable of superclass Shape
+
+        do {
+            System.out.print("\n\t MENU\n\t1. Triangle\n\t2. Rectangle\n\t3. Exit\n\tChoice: ");
+            choice = sc.nextInt();
+            System.out.println();
+
+            switch (choice) {
+                case 1: // Area of Triangle
+                    System.out.print("ENTER BASE OF TRIANGLE: ");
+                    double base = sc.nextDouble(); // read base from user
+                    System.out.print("ENTER HEIGHT OF TRIANGLE: ");
+                    double height = sc.nextDouble(); // read height from user
+                    shapeRef = new Triangle(base, height);
+                    System.out.println("AREA OF TRIANGLE IS: " + shapeRef.computeArea());
+                    System.out.println("=======================================================");
+                    break;
+
+                case 2: // Area of Rectangle
+                    shapeRef = new Rectangle(); // using default constructor
+                    shapeRef.read(); // call to read function
+                    System.out.println("AREA OF RECTANGLE IS: " + shapeRef.computeArea());
+                    System.out.println("=======================================================");
+                    break;
+
+                case 3: // Exit
+                    System.out.println("EXITED SUCCESSFULLY");
+                    System.out.println("=======================================================");
+                    break;
+
+                default: // Invalid input
+                    System.out.println("INVALID INPUT");
+                    System.out.println("=======================================================");
+            }
+        } while (choice != 3); // loop breaks when input choice = 3
+
+        sc.close(); // closing scanner
+    }
+}

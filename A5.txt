@@ -1,0 +1,239 @@
+package assignment;
+
+import java.util.Scanner;
+
+// Vehicle interface
+interface Vehicle {
+    void gearChange(int gear);
+    void speedUp();
+    void applyBrakes();
+    void display();
+}
+
+// Bicycle class
+class Bicycle implements Vehicle {
+    private int gear, speed;
+
+    Bicycle() { // Default constructor for Bicycle
+        System.out.println("\tBicycle started successfully\n");
+        gear = 1; // Gear is 1 when the cycle starts
+        speed = 10; // Speed is 10 when the cycle starts
+    }
+
+    public void gearChange(int newGear) {
+        if (newGear < 7 && newGear > 0) { // Maximum gear for vehicle is 6
+            gear = newGear;
+            System.out.println("\tGear changed successfully\n\tCurrent Gear is " + gear);
+        } else {
+            System.out.println("Gear is out of range\n");
+        }
+    }
+
+    public void speedUp() {
+        if ((speed + 5) < 50) { // 50 as maximum speed
+            speed += 5;
+            System.out.println("\n\tBicycle's speed increased\n\tCurrent speed is " + speed);
+        } else {
+            System.out.println("Speed cannot be increased above 50 Km/h\n");
+        }
+    }
+
+    public void applyBrakes() { // Function to apply brakes
+        Scanner sc = new Scanner(System.in);
+        int option;
+        System.out.println("1. DECREASE SPEED\n2. STOP BICYCLE\n");
+        option = sc.nextInt();
+
+        if (option == 1) {
+            if ((speed - 5) > 0) { // Speed never be negative
+                speed -= 5; // Per apply brakes, bicycle's speed is reduced by 5
+                System.out.println("Speed reduced successfully\n\tCurrent speed is " + speed + " Km/h\n");
+            } else {
+                speed = 0;
+                gear = 0;
+                System.out.println("Bicycle stopped successfully\n");
+            }
+        } else if (option == 2) { // To stop bicycle
+            speed = 0;
+            gear = 0;
+            System.out.println("Bicycle stopped successfully\n");
+        }
+    }
+
+    public void display() { // Displays current status of bicycle
+        System.out.println("YOUR BICYCLE'S SPEED IS " + speed + " Km/h AND GEAR IS " + gear);
+    }
+}
+
+// Car class
+class Car implements Vehicle {
+    private int gear, speed;
+
+    Car() {
+        System.out.println("\tCar started successfully\n");
+        gear = 1; // Gear when car starts
+        speed = 10; // Speed when car starts
+    }
+
+    public void gearChange(int newGear) {
+        if (newGear < 7 && newGear > 0) { // Maximum gear is 6
+            this.gear = newGear;
+            System.out.println("\tGear changed successfully\n\tCurrent Gear is " + gear);
+        } else {
+            System.out.print("Gear out of range\n");
+        }
+    }
+
+    public void speedUp() {
+        if ((speed + 20) < 150) { // 150 as maximum speed
+            speed += 20;
+            System.out.println("Car's speed increased\n\tCurrent speed is " + speed + " Km/h\n");
+        } else {
+            System.out.println("Speed cannot be increased above 150 Km/h\n");
+        }
+    }
+
+    public void applyBrakes() {
+        Scanner sc = new Scanner(System.in);
+        int option;
+        System.out.println("1. TO DECREASE SPEED\n2. TO STOP CAR\n");
+        option = sc.nextInt();
+
+        if (option == 1) {
+            if ((speed - 20) > 0) { // Checks speed is negative or positive if reduced by 20
+                speed -= 20; // Per apply brakes, vehicle speed is reduced by 20
+                System.out.println("Speed reduced successfully\n\tCurrent speed is " + speed + " Km/h\n");
+            } else {
+                speed = 0;
+                gear = 0;
+                System.out.println("Car stopped successfully\n");
+            }
+        } else if (option == 2) {
+            speed = 0;
+            gear = 0;
+            System.out.println("Car stopped successfully\n");
+        }
+    }
+
+    public void display() { // Displays current status of car
+        System.out.println("YOUR CAR'S SPEED IS " + speed + " Km/h AND GEAR IS " + gear + "\n");
+    }
+}
+
+// Bike class
+class Bike implements Vehicle {
+    private int gear, speed;
+
+    Bike() {
+        System.out.println("\tBike started successfully\n");
+        gear = 1; // Initial gear when bike starts
+        speed = 10; // Initial speed of bike when it starts
+    }
+
+    public void gearChange(int newGear) {
+        if (newGear < 6 && newGear > 0) { // Maximum gears is 5
+            gear = newGear;
+            System.out.println("\tGear changed successfully\n\tCurrent Gear is " + gear);
+        } else {
+            System.out.println("Gear out of range\n");
+        }
+    }
+
+    public void speedUp() {
+        if ((speed + 20) < 100) { // Maximum speed is 100 for bike
+            speed += 20;
+            System.out.println("Bike's speed increased\n\tCurrent speed is " + speed + " Km/h\n");
+        } else {
+            System.out.println("Speed cannot be increased above 100 Km/h\n");
+        }
+    }
+
+    public void applyBrakes() { // Method to reduce bike speed or stop bike
+        Scanner sc = new Scanner(System.in);
+        int option;
+        System.out.println("1. TO DECREASE SPEED\n2. TO STOP BIKE\n");
+        option = sc.nextInt();
+
+        if (option == 1) {
+            if ((speed - 20) > 0) { // Checks speed is negative or positive if reduced by 20
+                speed -= 20; // Per apply brakes, vehicle speed is reduced by 20
+                System.out.println("Speed reduced successfully\n\tCurrent speed is " + speed + " Km/h\n");
+            } else {
+                speed = 0;
+                gear = 0;
+                System.out.println("Bike stopped successfully\n");
+            }
+        } else if (option == 2) {
+            speed = 0;
+            gear = 0;
+            System.out.println("Bike stopped successfully\n");
+        }
+    }
+
+    public void display() { // Displays current bike status
+        System.out.println("YOUR BIKE'S SPEED IS " + speed + " Km/h AND GEAR IS " + gear + "\n");
+    }
+}
+
+// Main class
+public class A5 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Vehicle v = null; // Vehicle interface reference created
+        System.out.println("==============================================================");
+
+        int choice; // Variable to choose vehicle
+        do {
+            System.out.print(" SELECT VEHICLE \n\t1. BICYCLE \n\t2. CAR \n\t3. BIKE \n\t4. EXIT \nChoice: ");
+            choice = sc.nextInt();
+            System.out.println("==============================================================");
+
+            switch (choice) {
+                case 1:
+                    v = new Bicycle(); // Object of Bicycle class
+                    break;
+                case 2:
+                    v = new Car(); // Object of Car class
+                    break;
+                case 3:
+                    v = new Bike(); // Object of Bike class
+                    break;
+                case 4:
+                    System.exit(0); // Exit the program
+                default:
+                    System.out.println("INVALID INPUT");
+            }
+
+            if (0 < choice && choice < 4) {
+                int action;
+                do {
+                    System.out.print(" \tPress 1. Speed Up \n\tPress 2. Change Gear \n\tPress 3. Apply Brakes " +
+                            "\n\tPress 4. Display Vehicle Status \n\tPress 5. Change Vehicle / Exit \nChoice: ");
+                    action = sc.nextInt();
+                    System.out.println("==============================================================");
+
+                    switch (action) {
+                        case 1:
+                            v.speedUp();
+                            break;
+                        case 2:
+                            System.out.print("Which gear do you want? ");
+                            int newGear = sc.nextInt();
+                            v.gearChange(newGear);
+                            break;
+                        case 3:
+                            v.applyBrakes();
+                            break;
+                        case 4:
+                            v.display();
+                            break;
+                        case 5:
+                            break; // Go back to vehicle selection
+                        default:
+                            System.out.println("Invalid Input");
+                    }
+                } while (true);
+            }
+        } while (choice != 4); // Loop break when input choice = 4
+    }
+}
